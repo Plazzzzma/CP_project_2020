@@ -13,4 +13,4 @@ def convolve(img, kernel):
     out[:,:,0] = signal.convolve(img[:,:,0], kernel, mode="same")
     out[:,:,1] = signal.convolve(img[:,:,1], kernel, mode="same")
     out[:,:,2] = signal.convolve(img[:,:,2], kernel, mode="same")
-    return out / np.max(out)
+    return (255 * out / np.max(out)).astype(int)
