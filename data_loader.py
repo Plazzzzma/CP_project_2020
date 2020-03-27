@@ -1,4 +1,5 @@
 import os,sys
+import shutil
 import numpy as np
 import matplotlib.image as mpimg
 
@@ -23,7 +24,7 @@ def img_crop(im, w, h):
     return list_patches
 
 def extract_patch(n, patch_size, imgs):
-    """Extract (patches_size x patches_size) patches from the list imgs with n images"""
+    """Extract n images (patches_size x patches_size) patches from the list imgs"""
     # Extract patches from input images
     img_patches = [img_crop(imgs[i], patch_size, patch_size) for i in range(n)]
     #gt_patches = [img_crop(gt_imgs[i], patch_size, patch_size) for i in range(n)]
@@ -34,7 +35,7 @@ def extract_patch(n, patch_size, imgs):
     
     return img_patches #,gt_patches
 
-def load_set(directName, n):
+def load_set(directName, n = np.inf):
     """Load n images from the directory directName"""
     # Loaded a set of images
 
@@ -45,6 +46,16 @@ def load_set(directName, n):
     imgs = [mpimg.imread(directName + files[i]) for i in range(n)]
 
     return imgs
+
+def selectPatches(originDir, destinationDir, indices):
+    """Select the patches form a given map"""
+    for i in indices :
+        filePath = originDir + str(i).rstrip() + ".png"
+
+        if not os.path.isfile(filePath):
+            print("file does not exist")
+        shutil.copy2(filePath,destinationDir)
+    print("Done")
 
 def img_crop_window(im, w, h):
     kW=71

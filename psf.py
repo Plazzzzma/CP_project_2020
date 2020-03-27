@@ -10,7 +10,7 @@ def gauss_kern(kern_size=11, std=3):
 
 def convolve(img, kernel):
     out = np.copy(img) / np.max(img)
-    out[:,:,0] = signal.convolve(img[:,:,0], kernel, mode="same")
-    out[:,:,1] = signal.convolve(img[:,:,1], kernel, mode="same")
-    out[:,:,2] = signal.convolve(img[:,:,2], kernel, mode="same")
+    out[:,:,0] = ndimage.convolve(img[:,:,0], kernel, mode="mirror")
+    out[:,:,1] = ndimage.convolve(img[:,:,1], kernel, mode="mirror")
+    out[:,:,2] = ndimage.convolve(img[:,:,2], kernel, mode="mirror")
     return (255 * out / np.max(out)).astype(np.uint8)
